@@ -20,7 +20,7 @@ Tool per realizzare una guida da utilizzare alla prossima asta del fantacalcio.
 ```
 ├── LICENSE
 ├── README.md
-├── simulatore-classifiche
+├── simulatore-classifiche_r
 └── tool-asta
 ```
 

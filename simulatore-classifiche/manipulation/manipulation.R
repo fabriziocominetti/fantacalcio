@@ -9,7 +9,7 @@ mDays <- 36    # Choose number of matchdays
 
 # Import excel file "Calendario" from fantaleghe.it and return a list with scores in each match day
 
-data <- readxl::read_excel("../Calendario_Alboreto-League.xlsx", skip=2, col_names = F)
+data <- readxl::read_excel("./Calendario_Alboreto-League.xlsx", skip=2, col_names = F)
 
 data1 <- data[,1:4]
 data1 <- data1[,c(1,2,4,3)]
