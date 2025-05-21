@@ -1,6 +1,3 @@
+.venv_fantacalcio/
 *.xlsx
-simulatore-classifiche/Risultati simulazioni.html
-simulatore-classifiche/Simulation dataset.Rdata
-Simulation dataset.Rdata
-Risultati simulazioni Alboreto-League.html
-Risultati simulazioni CHIRINGUITO-CUP.html
+*.csv
