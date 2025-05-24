@@ -1,3 +1,7 @@
 .venv_fantacalcio/
 *.xlsx
 *.csv
+
+!Calendario_anon_esempio.csv
+!processed_calendario_anon_esempio.csv
+!simulation_results_anon_esempio.csv

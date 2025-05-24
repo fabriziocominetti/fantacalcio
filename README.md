@@ -10,6 +10,7 @@ Scarica il calendario (.xlsx) da Fantagazzetta, converti il file in CSV e salval
 2. Avvia `02_league_simulator.py` e scegli il file generato per simulare 10000 campionati con giornate casuali e salvare i risultati in un nuovo file.
 3. Lancia la dashboard con `streamlit run 03_app.py` per visualizzare i risultati delle simulazioni con un grafico interattivo.
 
+![Esempio](plot_esempio.png)
 
 ```
 fantacalcio_simulations/
