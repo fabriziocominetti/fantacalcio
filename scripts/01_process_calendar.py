@@ -35,6 +35,7 @@ def load_and_process_calendar(file_path):
 
     fanta_df['matchday'] = fanta_df['home_team'].str.extract(r'(\d+)\s+Giornata\s+lega')
     fanta_df['matchday'] = fanta_df['matchday'].ffill()
+    fanta_df['matchday'] = fanta_df['matchday'].infer_objects(copy=False)
 
     # Drop rows where 'home_team' contains 'Giornata lega' (these are just matchday headers)
     fanta_df = fanta_df[~fanta_df['home_team'].str.contains('Giornata lega', na=False)]
