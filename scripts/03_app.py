@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import math
 
 st.title("Fantacalcio | Simulation Results")
 
@@ -16,13 +17,22 @@ else:
 # Sort teams alphabetically
 df['team'] = pd.Categorical(df['team'], categories=sorted(df['team'].unique()), ordered=True)
 
-# Main histogram
+# Dynamic layout: 2 rows, columns = half the number of teams
+num_teams = df['team'].nunique()
+if num_teams % 2 != 0:
+    st.error("Number of teams must be even for a 2-row layout.")
+    st.stop()
+
+facet_wrap = num_teams // 2
+rows = 2
+
+# Create histogram
 fig = px.histogram(
     df,
     x="rank",
     color="team",
     facet_col="team",
-    facet_col_wrap=5,
+    facet_col_wrap=facet_wrap,
     opacity=0.6,
     nbins=10,
     category_orders={"team": sorted(df['team'].unique())},
@@ -32,15 +42,11 @@ fig = px.histogram(
 # Update layout
 fig.update_layout(
     title="Frequency of Final Ranking by Team (10000 permutations)",
-    height=700,
+    height=350 * rows,
     showlegend=False,
     margin=dict(t=100, b=100),
-    bargap=0.2,  # Adds spacing between bars
-)
-
-# More space between facets
-fig.update_layout(
-    grid=dict(rows=2, columns=5, pattern="independent"),
+    bargap=0.2,
+    grid=dict(rows=rows, columns=facet_wrap, pattern="independent"),
     annotations=[]
 )
 
@@ -51,19 +57,22 @@ fig.update_xaxes(tickangle=0)
 
 # Remove all x-axis titles
 fig.for_each_xaxis(lambda axis: axis.update(title=None))
-# Restore "Rank" title only for x-axes in second row (1–5)
-for i in range(1, 6):
+# Restore "Rank" title only for bottom row
+for i in range(1, facet_wrap + 1):
     fig['layout'][f'xaxis{i}'].title.text = "Rank"
+
+
 
 # Remove all y-axis titles
 fig.for_each_yaxis(lambda axis: axis.update(title=None))
-# Add title only for leftmost plots in each row (e.g., yaxis1 and yaxis6)
-fig['layout']['yaxis1'].title.text = "Simulations"
-fig['layout']['yaxis6'].title.text = "Simulations"
+# Add title only for leftmost plots in each row
+for i in [1, facet_wrap + 1]:
+    fig['layout'][f'yaxis{i}'].title.text = "Simulations"
 
+# Show plot
 st.plotly_chart(fig, use_container_width=True)
 
-# Download plot
+# Download button
 st.download_button(
     label="Download as HTML",
     data=fig.to_html(full_html=True, include_plotlyjs='cdn'),
